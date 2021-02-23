@@ -36,7 +36,7 @@ class PropertyController extends Controller
             $properties = $properties->where('garages', $request->garages);
         }
 
-        if ($request->has('price') && $request->price) {
+        if ($request->has('price') && $request->price && $request->price[0] && $request->price[1]) {
             $properties = $properties->whereBetween('price', $request->price);
         }
 

@@ -69,6 +69,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'Search',
     data() {
@@ -88,10 +90,12 @@ export default {
     },
     methods: {
         submitForm(form) {
-            this.$refs['form'].validate(valid => {
+            this.$refs['form'].validate(async valid => {
                 if (!valid) return;
-
-                console.log('submitted', form);
+                this.$emit('loading');
+                const { data } = await axios.post('/api/search', form);
+                this.$emit('data', data);
+                this.$emit('loading');
             });
         },
         resetForm() {
