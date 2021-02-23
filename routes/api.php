@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/search', [PropertyController::class, 'search']);
+Route::post('/search', [PropertyController::class, 'search']);

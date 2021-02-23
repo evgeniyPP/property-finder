@@ -14,6 +14,32 @@ class PropertyController extends Controller
      */
     public function search(Request $request)
     {
-        return Property::all();
+        if ($request->has('name') && $request->name) {
+            $properties = Property::where('name', 'like', '%' . $request->name . '%')->get();
+        } else {
+            $properties = Property::all();
+        }
+
+        if ($request->has('bedrooms') && $request->bedrooms) {
+            $properties = $properties->where('bedrooms', $request->bedrooms);
+        }
+
+        if ($request->has('bathrooms') && $request->bathrooms) {
+            $properties = $properties->where('bathrooms', $request->bathrooms);
+        }
+
+        if ($request->has('storeys') && $request->storeys) {
+            $properties = $properties->where('storeys', $request->storeys);
+        }
+
+        if ($request->has('garages') && $request->garages) {
+            $properties = $properties->where('garages', $request->garages);
+        }
+
+        if ($request->has('price') && $request->price) {
+            $properties = $properties->whereBetween('price', $request->price);
+        }
+
+        return response()->json($properties->values());
     }
 }
