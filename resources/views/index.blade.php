@@ -9,8 +9,6 @@
     <title>Property Finder</title>
 </head>
 <body>
-    <div id="app">
-        <app />
-    </div>
+    <div id="app"></div>
 </body>
 </html>
