@@ -37,15 +37,18 @@ class PropertyController extends Controller
         }
 
         if ($request->has('price') && $request->price && ($request->price[0] || $request->price[1])) {
-            if ($request->price[0] && !$request->price[1]) {
-                $properties = $properties->where('price', '>', $request->price[0]);
+            $price_min = $request->price[0];
+            $price_max = $request->price[1];
+
+            if ($price_min && !$price_max) {
+                $properties = $properties->where('price', '>', $price_min);
             }
 
-            if ($request->price[1] && !$request->price[0]) {
-                $properties = $properties->where('price', '<', $request->price[1]);
+            if (!$price_min && $price_max) {
+                $properties = $properties->where('price', '<', $price_max);
             }
 
-            if ($request->price[0] && $request->price[1]) {
+            if ($price_min && $price_max) {
                 $properties = $properties->whereBetween('price', $request->price);
             }
         }
