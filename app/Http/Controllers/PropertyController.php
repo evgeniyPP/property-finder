@@ -36,8 +36,18 @@ class PropertyController extends Controller
             $properties = $properties->where('garages', $request->garages);
         }
 
-        if ($request->has('price') && $request->price && $request->price[0] && $request->price[1]) {
-            $properties = $properties->whereBetween('price', $request->price);
+        if ($request->has('price') && $request->price && ($request->price[0] || $request->price[1])) {
+            if ($request->price[0] && !$request->price[1]) {
+                $properties = $properties->where('price', '>', $request->price[0]);
+            }
+
+            if ($request->price[1] && !$request->price[0]) {
+                $properties = $properties->where('price', '<', $request->price[1]);
+            }
+
+            if ($request->price[0] && $request->price[1]) {
+                $properties = $properties->whereBetween('price', $request->price);
+            }
         }
 
         return response()->json($properties->values());
