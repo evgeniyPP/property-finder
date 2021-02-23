@@ -1,9 +1,11 @@
 {
     "private": true,
     "scripts": {
+        "serve": "concurrently \"npm run artisan:serve\" \"npm run watch\"",
         "dev": "npm run development",
         "development": "mix",
         "watch": "mix watch",
+        "artisan:serve": "php artisan serve",
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
@@ -11,6 +13,7 @@
     },
     "devDependencies": {
         "axios": "^0.21",
+        "concurrently": "^6.0.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
