@@ -89,7 +89,7 @@ export default {
         };
     },
     methods: {
-        submitForm(form) {
+        submitForm: debounce(function(form) {
             this.$refs['form'].validate(async valid => {
                 if (!valid) return;
                 this.$emit('loading');
@@ -97,7 +97,7 @@ export default {
                 this.$emit('data', data);
                 this.$emit('loading');
             });
-        },
+        }),
         resetForm() {
             this.$refs['form'].resetFields();
         },
@@ -120,6 +120,18 @@ function checkPrice(_, value, cb) {
     }
 
     cb();
+}
+
+function debounce(fn, delay = 500) {
+    let timeoutID = null;
+    return function() {
+        clearTimeout(timeoutID);
+        const args = arguments;
+        const that = this;
+        timeoutID = setTimeout(function() {
+            fn.apply(that, args);
+        }, delay);
+    };
 }
 </script>
 
